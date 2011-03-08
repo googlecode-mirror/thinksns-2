@@ -1,0 +1,111 @@
+<!-- 引入编辑器相关的JS文件 -->
+<script src="__PUBLIC__/js/editor/kissy-min.js"></script>
+<script src="__PUBLIC__/js/editor/uibase/uibase-pkg-min.js"></script>
+<script src="__PUBLIC__/js/editor/dd/dd-pkg-min.js"></script>
+<script src="__PUBLIC__/js/editor/overlay/overlay-pkg-min.js"></script>
+<script src="__PUBLIC__/js/editor/editor/editor-all-pkg-min.js?t=20101223a"></script>
+<script src="__PUBLIC__/js/editor/editor/biz/ext/editor-plugin-pkg-min.js?t=20101223a"></script>
+<script>
+function loadEditor(textareaId) {
+    KISSY.use('editor', function() {
+        var KE = KISSY.Editor;
+        var EDITER_UPLOAD = "{:U('home/Attach/kissy')}";
+       
+        //编辑器内弹窗 z-index 底限，防止互相覆盖
+        KE.Config.baseZIndex = 10000;
+
+        var cfg = {
+            attachForm:true,
+            baseZIndex:10000,
+            focus:true,
+            pluginConfig: {
+                "image":{
+                    upload:{
+                        serverUrl:EDITER_UPLOAD,
+                        surfix:"png,jpg,jpeg,gif,bmp"
+                        // TODO:直接读取后台管理配置
+                        //sizeLimit:2000//k
+                    }
+                },
+                "flash":{
+                    defaultWidth:"300",
+                    defaultHeight:"300"
+                },
+                /*
+                "video":{
+                    urlCfg:[
+                        {
+                            reg:/tudou\.com/i,
+                            url:"http://bangpai.daily.taobao.net/json/getTudouVideo.htm?" +
+                                    "url=@url@&callback=@callback@"//"&rand=@rand@"
+                        }
+                    ],
+                    providers:[
+                        {
+                            reg:/youku\.com/i,
+                            width:480,
+                            height:400,
+                            detect:function(url) {
+                                var m = url.match(/id_([^.]+)\.html$/);
+                                if (m) {
+                                    return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                                }
+                                m = url.match(/v_playlist\/([^.]+)\.html$/);
+                                if (m) {
+                                    return;
+                                    //return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                                }
+                                return url;
+                            }
+                        },
+                        {
+                            reg:/tudou\.com/i,
+                            width:480,
+                            height:400,
+                            detect:function(url) {
+                                return url;
+                            }
+                        },
+                        {
+                            reg:/ku6\.com/i,
+                            width:480,
+                            height:400,
+                            detect:function(url) {
+                                var m = url.match(/show[^\/]*\/([^.]+)\.html$/);
+                                if (m) {
+                                    return "http://player.ku6.com/refer/" + m[1] + "/v.swf";
+                                }
+                                return url;
+                            }
+                        },
+                        {
+                            reg:/taobaocdn\.com/i,
+                            width:480,
+                            height:400,
+                            detect:function(url) {
+                                return url;
+                            }
+                        }
+                    ]
+                },
+                */
+                "music":{
+                    //必须和网址url同域而不是类库同域
+                    musicPlayer:KE.Config.base + "music/niftyplayer.swf"
+                },
+                "resize":{
+                    direction:["y"]
+                }
+            }
+        };
+
+        KE("#"+textareaId, cfg).use(
+            "resize,sourcearea,preview,separator," +
+            "undo,separator," +
+            "removeformat,font,format,color,table,separator," +
+            "list,indent,justify,separator," +
+            "link,image,flash,music,xiami-music,smiley,separator," +
+            "maximize");
+    });
+}
+</script>

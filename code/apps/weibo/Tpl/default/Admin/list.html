@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>系统配置 - 站点配置</title>
+<link href="__PUBLIC__/admin/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+</head>
+<body>
+<div class="so_main">
+ <div class="page_tit">微博</div>
+  <div class="tit_tab">
+  	<ul>
+    <li><a href="{:U('weibo/admin/index')}">微博配置</a></li>
+    <li><a href="{:U('weibo/admin/weibolist')}" class="on">微博列表</a></li>
+    </ul>
+    </div>
+  
+  <!--列表模块-->
+  <div class="Toolbar_inbox">
+    <div class="page right">
+	{$list.html}
+</div>&nbsp;</div>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"><input type="checkbox" name="checkbox" id="checkbox">
+          <label for="checkbox"></label></th>
+ 		<th class="line_l">微博ID</th>
+        <th class="line_l">发布者</th>
+        <th class="line_l" style="width:350px;">微博内容</th>
+        <th class="line_l">转发数 / 回复数</th>
+        <th class="line_l">发布时间</th>
+        <th class="line_l">微博类型</th>
+        <th class="line_l">来自</th>
+        <th class="line_l">操作</th>
+      </tr>
+<volist id="vo" name="list['data']">      
+      <tr id="weibo_list_{$vo.weibo_id}">
+        <td><input type="checkbox" name="checkbox2" id="checkbox2"></td>
+        <td><a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}" target="_blank">{$vo.weibo_id}</a></td>
+        <td><space uid="vo.uid" target="_blank">{uname}</space></td>
+        <td>{$vo.content|getShort=36}</td>
+        <td>{$vo.transpond} / {$vo.comment}</td>
+        <td>{$vo.ctime|friendLydate}</td>
+        <td>
+        <switch name="vo.type">
+        	<case value="0">
+        		纯文字
+        	</case>
+        	<case value="1">
+        		图片
+        	</case>
+        	<case value="3">
+        		视频
+        	</case>
+        	<case value="4">
+        		音乐 
+        	</case>
+        </switch>
+        </td>
+        <td><?php echo getFrom($vo['from'], $vo['from_data']);?></td>
+        <td><a href="javascript:void(0)" onclick="deleteWeibo({$vo.weibo_id},{$vo.uid})">删除</a></td>
+      </tr>
+</volist>
+    </table>
+  </div>
+  <div class="Toolbar_inbox">
+    <div class="page right">
+	{$list.html}
+</div>
+    &nbsp; </div>
+
+</div>
+<script>
+	function deleteWeibo(weibo_id,uid){
+		if( confirm('确定要删除这条微博?')){
+			$.post( "{:U('weibo/admin/operate')}" ,{dotype:'del',weibo_id:weibo_id,uid:uid},function(txt){
+				if(txt==1){
+					$("#weibo_list_"+weibo_id).slideUp('slow');
+				}
+
+			});		
+		}
+
+	}
+</script>
+</body>
+</html>

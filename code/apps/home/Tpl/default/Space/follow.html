@@ -1,0 +1,68 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<link href="../Public/index.css" rel="stylesheet" type="text/css" />
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox">
+      <div class="mainbox_R">
+		<include file="../Space/space_right" />
+      </div>
+      <div class="mainbox_C">
+      <div class="friend_info">
+          <include file="../Space/userMenu" />
+      </div>
+      <div style="clear: left; height: 20px;"></div>
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+        <div onmouseout="this.className='feeds_sift'" onmouseover="this.className='feeds_sift_hover'" class="feeds_sift"><a class="ico" href="#">&nbsp;</a>
+          <div class="feeds_sift_box">
+            <p>类型筛选</p>
+            <a appid="" href="javascript:void(0)">全部</a> </div>
+        </div>
+        <ul>
+          
+          <li><a id="feed_all_item" rel="all" class="<eq name='type' value='following'>on</eq> feed_item" href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}"><span>关注</span></a></li>
+		 <li><a id="feed_colleague_item" rel="colleague" class="<eq name='type' value='follower'>on</eq> feed_item"  href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}"><span>粉丝</span></a></li>
+        </ul>
+      </div>
+      <div class="MenuSub ">
+      <span class="pl5">共{$list.count}人</span>
+      </div>
+      <div class="feedBox"> 
+        <ul class="feed_list">
+
+<volist id="vo" name="list.data">
+          <li class="lineD_btm">
+              <div class="userPic"><space uid="vo.fid">{uavatar}</space></div>
+              <div class="feed_c" style="margin-left:75px">
+                <div class="msgCnt" style="padding-bottom:0;">
+				
+				<php>if($vo['fid']!=$mid){</php>
+				<div class="right pr10" id="follow_list_{$vo.fid}">
+				<neq name="mid" value="0">
+					<script>document.write(followState('{$vo.followState}','dolistfollow',{$vo.fid}))</script>
+				</neq>
+				</div>
+				<php>}</php>
+				<space uid="vo.fid">{uname}</space>{$vo.fid|getUserGroupIcon}</div>
+               
+			   			   
+			    <div class="feed_c_btm lh18" style=" padding-top:5px"> 
+		      <php>if($vo['mini']){</php><div>最近微博 {$vo.mini.ctime|friendlyDate} </div><php>}</php>
+                    <div><a href="{:U('home/space/detail',array('id'=>$vo['mini']['weibo_id']))}">{$vo.mini.content}</a></div>
+                    <php>if($vo['user']['location']){</php><div>{$vo.user.location}</div><php>}</php>
+                    <div class="pt5"><span ><a href="{:U('home/space/follow',array('type'=>'following','uid'=>$vo['fid']))}">关注<strong>{$vo.following}</strong>人</a></span><span class="pl10"><a href="{:U('home/space/follow',array('type'=>'follower','uid'=>$vo['fid']))}">粉丝<strong>{$vo.follower}</strong>人</a></span></div>
+				</div>
+              </div>
+            </li>
+</volist>
+        </ul>
+      </div>
+	  <div class="page">{$list.html}</div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

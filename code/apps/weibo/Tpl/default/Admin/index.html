@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>系统配置 - 站点配置</title>
+<link href="__PUBLIC__/admin/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="so_main">
+<div class="page_tit">微博</div>
+  <div class="tit_tab">
+  	<ul>
+    <li><a href="{:U('weibo/admin/index')}" class="on">微博配置</a></li>
+    <li><a href="{:U('weibo/admin/weibolist')}">微博列表</a></li>
+    </ul>
+    </div>
+  <div class="form2">
+  	<form method="post" action="{:U('weibo/admin/index')}">
+    <dl class="">
+      <dt>今日话题：</dt>
+      <dd>
+        <input name="todaytopic" type="text" value="{$todaytopic}">
+    </dl>
+    
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="提交" />
+    </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

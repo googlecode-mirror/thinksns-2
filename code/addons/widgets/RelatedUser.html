@@ -1,0 +1,33 @@
+<div class="right_box">
+    <h2>{$title}</h2>
+    <ul class="user_list" id="related_user">
+        <php>for ( $i = 0; $i < $limit; $i++ ) {</php>
+        <php>
+            $vo = array_shift($user);
+            if (empty($vo)) break;
+        </php>
+        <li id="related_user_{$vo}">
+            <span class="userPic"><a title="" href="{:U('home/Space/index',array('uid'=>$vo))}">
+                <img src="{$vo|getUserFace='m'}" card="1">
+            </a></span>
+            <div class="name"><a href="{:U('home/Space/index',array('uid'=>$vo))}">{$vo|getUserName}</a></div>
+            <div><a href="javascript:void(0);" class="cGray2" onclick="subscribe({$vo});">加关注</a></div>
+        </li>
+        <php>}</php>
+    </ul>
+    <php>$_SESSION['related_user']	= serialize($user);</php>
+</div>
+
+<script type="text/javascript">
+    function subscribe(uid) {
+        $.post("{:U('home/Widget/doFollowRelatedUser')}", {uid:uid}, function(res){
+            if ('0' == res) {
+                ui.success('关注失败');
+            }else {
+                ui.success('关注成功');
+                $('#related_user_'+uid).remove();
+                $('#related_user').append(res);
+            }
+        });
+    }
+</script>

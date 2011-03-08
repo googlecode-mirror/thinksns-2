@@ -1,0 +1,31 @@
+<php>if($mid && !$is_im_closed && $site_opts["is_im_open"]){</php>
+	<include file="__THEME__/im" />
+<php>}</php>
+
+<volist name="ts['ad']['footer']" id="vo">
+<div class="ad_footer"><div class="ke-post">{$vo['content']}</div></div>
+</volist>
+<div class="footer_bg">
+<div class="footer">
+	<div class="menu">
+		<php>
+		foreach($ts['footer_document'] as $k => $v) {
+			$v['url'] = isset($v['url']) ? $v['url'] : U('home/Public/document',array('id'=>$v['document_id']));
+			$ts['footer_document'][$k] = '<a href="'.$v['url'].'" target="_blank">'.$v['title'].'</a>';
+		}
+		echo implode('&nbsp;&nbsp;|&nbsp;&nbsp', $ts['footer_document']);
+		</php>
+	</div>
+ <div> Copyright © {$ts['site']['site_name']} {$ts['site']['site_icp']} Powered by <a href="http://www.thinksns.com" target="_blank">ThinkSNS</a></div>
+</div>
+</div>
+</div>
+<php>if($mid > 0) {</php>
+<script>
+	$(document).ready(function(){
+		setInterval("ui.countNew()",100000);
+	})
+</script>
+<php>}</php>
+</body>
+</html>

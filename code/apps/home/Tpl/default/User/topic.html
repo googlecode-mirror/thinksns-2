@@ -1,0 +1,221 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<link href="../Public/index.css" rel="stylesheet" type="text/css" />
+<div class="content"><!-- 内容 begin  --> 
+  <include file="__THEME__/apps" />
+  <div class="main">
+    <div class="mainbox">
+      <div class="mainbox_R">
+          <div class="right_box">
+          <h2><a href="#">关注的话题</a></h2>
+          <ul class="topic_list">
+          	<volist id="vo" name="followTopic">
+            	<li><a href="{:U('home/user/search/',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}</a></li>
+			</volist>
+ 
+          </ul>
+        </div>		
+		
+        <div class="right_box">
+          <h2>热门话题榜</h2>
+          <ul class="topic_list">
+          	<volist id="vo" name="hotTopic">
+            	<li><a href="{:U('home/user/search/',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}({$vo.count})</a></li>
+			</volist>
+          </ul>
+        </div>
+		<volist name="ts['ad']['right']" id="vo">
+		<div class="ad_right"><div class="ke-post">{$vo.content}</div></div>
+		</volist>
+      </div>
+      <div class="mainbox_C">
+	    <php>if($aboutkey){</php>
+        <div class="topic">
+          <dl>
+            <dt class="f14px"><em><img class="icoWrite" src="__THEME__/images/zw_img.gif" /> <a href="javascript:void(0)" onclick="weibo.quickpublish('#{$aboutkey}# ')">我也说几句</a></em><strong>今日看点：</strong>大家一起聊"<a href="{:U('home/user/search',array('k'=>$aboutkey))}">{$aboutkey}</a>"吧</dt>
+			<volist id="vo" name="keylist">
+            <dd class="left pl10" style="width:70px;"><span class="userPic mb10"><space uid="vo.uid">{uavatar}</space></span> 
+              
+              <!--关注按钮 begin--> 
+			  <php>if(1==2){</php>
+              <dd style="width:90%; text-align:center; padding-top:20px;" id="follow_state">
+				<script>document.write(followState('{$vo.followState}','',{$vo.uid}))</script></dd>
+			  <php>}</php>
+              <!--关注按钮 end--> 
+            </dd>
+            <dd class="left" style=" width: 480px;">
+              <h3><space uid="vo.uid">{uname}</space></h3>
+              <p>{$vo.userinfo.location} <a href="{:U('home/space/follow',array('uid'=>$vo['uid'],'type'=>'follower'))}">粉丝{$vo.follower}人</a></p>
+              <p style=" height:35px; overflow:hidden; display:block; line-height: 18px;"><a href="{:U('home/space/detail',array('id'=>$vo['weibo_id']))}">{$vo.content}</a> ({$vo.ctime|friendlyDate})</p>
+            </dd>
+			</volist>
+          </dl>
+        </div>
+		<php>}</php>
+        <!-- ========== 大家在说 begin ============= -->
+        <div class="tab-menu"><!-- 切换标签 begin  -->
+          <ul>
+            <li><a class="<eq name='type' value='index'>on</eq> feed_item" href="{:U('home/user/topic')}"><span>大家在说</span></a></li>
+            <li><a class="<eq name='type' value='transpond'>on</eq> feed_item" href="{:U('home/user/topic',array('type'=>'transpond'))}"><span>热门转发</span></a></li>
+            <li><a class="<eq name='type' value='comment'>on</eq> feed_item" href="{:U('home/user/topic',array('type'=>'comment'))}"><span>热门回复</span></a></li>
+          </ul>
+        </div>
+        <div class="feedBox">
+          <ul class="feed_list">
+          <volist id="vo" name="list.data">
+            <li class="lineD_btm" id="list_li_{$vo.id}">
+<switch name="type">
+	<case value="transpond">
+      <div class="head_pic">
+      	<strong>{$vo.transpond}</strong>
+      	<a href="###">转发</a>
+      </div>
+	</case>
+	
+	<case value="comment">
+      <div class="head_pic">
+      	<strong>{$vo.comment}</strong>
+      	<a href="###">回复</a>
+      </div>
+	</case>
+	
+	<case value="index">
+              <div class="userPic">
+              	<space uid="vo.uid">{uavatar}</space>
+				</div>
+	</case>
+	
+	
+</switch>
+
+
+              <div class="feed_c">
+                <div class="msgCnt"><space uid="vo.uid">{uname}</space>{$vo.uid|getUserGroupIcon}：{$vo.content|format=true}</div>
+				<php>if( $vo['transpond_id'] ){</php>
+				<php>if($vo['expend']){</php>
+	                  <div class="feed_quote"> <img class="q_ico_arrow" src="__THEME__/images/zw_img.gif" />
+	                    <div class="q_tit"><img class="q_tit_l" src="__THEME__/images/zw_img.gif" /></div>
+	                    <div class="q_con"> <space uid="vo.expend.uid">@{uname}</space>：{$vo.expend.content|format=true} <a href="{:U('home/space/detail',array('id'=>$vo['expend']['id']))}">原文转发({$vo.expend.transpond}</a>)&nbsp;|&nbsp;<a href="{:U('home/space/detail',array('id'=>$vo['expend']['id']))}">原文评论({$vo.expend.comment})</a> {$vo.expend.expend} </div>
+	                    <div class="q_btm"><img class="q_btm_l" src="__THEME__/images/zw_img.gif" /></div>
+	                  </div>
+				   <php>}else{</php>
+	                  <div class="feed_quote"> <img class="q_ico_arrow" src="__THEME__/images/zw_img.gif" />
+	                    <div class="q_tit"><img class="q_tit_l" src="__THEME__/images/zw_img.gif" /></div>
+	                    <div class="q_con">此微博已被原作者删除</div>
+	                    <div class="q_btm"><img class="q_btm_l" src="__THEME__/images/zw_img.gif" /></div>
+	                  </div>
+				   <php>}</php>
+                <php>}else{</php>
+                	{$vo.expend|format}
+                <php>}</php>
+			    <div class="feed_c_btm"> 
+					<span class="right">
+						<php>if( $vo['uid'] == $mid ){</php><a href="javascript:void(0)" onclick="ui.confirm(this,'确认要删除这条微博?')" callback="weibo.deleted({$vo.id})">删除</a>&nbsp;&nbsp;|&nbsp;&nbsp;<php>}</php>
+						<a href="javascript:void(0)" onclick="weibo.transpond({$vo.id})">转发({$vo.transpond})</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+						<php>if($vo['is_favorited']){</php>
+							<a href="javascript:void(0)" onclick="weibo.unFavorite({$vo.id},this)">已收藏</a>
+						<php>}else{</php>
+							<a href="javascript:void(0)" onclick="weibo.favorite({$vo.id},this)">收藏</a>
+						<php>}</php>
+						&nbsp;&nbsp;|&nbsp;&nbsp;
+						<a href="javascript:void(0)" rel="comment" minid="{$vo.id}" >评论({$vo.comment})</a>
+					</span>
+					 <cite>
+					<a href="{:U('home/space/detail',array('id'=>$vo['id']))}">{$vo.ctime|friendlyDate}</a></cite> 来自 <cite><?php echo getFrom($vo['from'], $vo['from_data']);?></cite> 
+				</div>
+                <div id="comment_list_{$vo.id}" style=""></div>
+              </div>
+            </li>
+          </volist>
+        </ul>
+        </div>
+        <!-- ========== 大家在说 end ============= -->
+       
+        
+        <!--
+        <div class="tab-menu">
+          <ul>
+            <li><a class="feed_item" href="###"><span>大家在说</span></a></li>
+            <li><a class="feed_item" href="###"><span>热门转发</span></a></li>
+            <li><a class="on feed_item" href="###"><span>热门话题</span></a></li>
+          </ul>
+        </div>
+        <div class="feedBox">
+          <ul class="feed_list">
+            <li id="list_li_332" class="lineD_btm">
+              <div class="head_pic">
+              <strong>2141</strong>
+              <a href="###">评论</a>
+              </div>
+              <div class="feed_c">
+                <div class="msgCnt"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1" title="兽汰姆"><strong>兽汰姆</strong></a>：按时大上大//<a target="_blank" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆 </a> 转发时同时评论好像还不行</div>
+                <div class="feed_quote"> <img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_ico_arrow">
+                  <div class="q_tit"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_tit_l"></div>
+                  <div class="q_con"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆</a>：转发时同时评论好像还不行 <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文转发(3</a>)&nbsp;|&nbsp;<a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文评论(0)</a> </div>
+                  <div class="q_btm"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_btm_l"></div>
+                </div>
+                <div class="feed_c_btm"> <span class="right"> <a onclick="transpond(332)" href="javascript:void(0)">转发(0)</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a onclick="stowMini(332,this)" href="javascript:void(0)">收藏</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a minid="332" rel="comment" href="javascript:void(0)">评论(0)</a> </span> <cite> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">2小时前</a></cite> 来自 <cite><a href="#">网站</a></cite> </div>
+                <div style="" id="comment_list_332"></div>
+              </div>
+            </li>
+            <li id="list_li_332" class="lineD_btm">
+              <div class="head_pic">
+              <strong>2141</strong>
+              <a href="###">评论</a>
+              </div>
+              <div class="feed_c">
+                <div class="msgCnt"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1" title="兽汰姆"><strong>兽汰姆</strong></a>：按时大上大//<a target="_blank" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆 </a> 转发时同时评论好像还不行</div>
+                <div class="feed_quote"> <img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_ico_arrow">
+                  <div class="q_tit"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_tit_l"></div>
+                  <div class="q_con"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆</a>：转发时同时评论好像还不行 <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文转发(3</a>)&nbsp;|&nbsp;<a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文评论(0)</a> </div>
+                  <div class="q_btm"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_btm_l"></div>
+                </div>
+                <div class="feed_c_btm"> <span class="right"> <a onclick="transpond(332)" href="javascript:void(0)">转发(0)</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a onclick="stowMini(332,this)" href="javascript:void(0)">收藏</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a minid="332" rel="comment" href="javascript:void(0)">评论(0)</a> </span> <cite> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">2小时前</a></cite> 来自 <cite><a href="#">网站</a></cite> </div>
+                <div style="" id="comment_list_332"></div>
+              </div>
+            </li>
+            <li id="list_li_332" class="lineD_btm">
+              <div class="head_pic">
+              <strong>2141</strong>
+              <a href="###">评论</a>
+              </div>
+              <div class="feed_c">
+                <div class="msgCnt"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1" title="兽汰姆"><strong>兽汰姆</strong></a>：按时大上大//<a target="_blank" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆 </a> 转发时同时评论好像还不行</div>
+                <div class="feed_quote"> <img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_ico_arrow">
+                  <div class="q_tit"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_tit_l"></div>
+                  <div class="q_con"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆</a>：转发时同时评论好像还不行 <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文转发(3</a>)&nbsp;|&nbsp;<a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文评论(0)</a> </div>
+                  <div class="q_btm"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_btm_l"></div>
+                </div>
+                <div class="feed_c_btm"> <span class="right"> <a onclick="transpond(332)" href="javascript:void(0)">转发(0)</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a onclick="stowMini(332,this)" href="javascript:void(0)">收藏</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a minid="332" rel="comment" href="javascript:void(0)">评论(0)</a> </span> <cite> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">2小时前</a></cite> 来自 <cite><a href="#">网站</a></cite> </div>
+                <div style="" id="comment_list_332"></div>
+              </div>
+            </li>
+            <li id="list_li_332" class="lineD_btm">
+              <div class="head_pic">
+              <strong>2141</strong>
+              <a href="###">评论</a>
+              </div>
+              <div class="feed_c">
+                <div class="msgCnt"><a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1" title="兽汰姆"><strong>兽汰姆</strong></a>：按时大上大//<a target="_blank" href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆 </a> 转发时同时评论好像还不行</div>
+                <div class="feed_quote"> <img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_ico_arrow">
+                  <div class="q_tit"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_tit_l"></div>
+                  <div class="q_con"> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=index&amp;uid=1">@兽汰姆</a>：转发时同时评论好像还不行 <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文转发(3</a>)&nbsp;|&nbsp;<a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=307">原文评论(0)</a> </div>
+                  <div class="q_btm"><img src="/sociax_2_0/public/themes/blue/images/zw_img.gif" class="q_btm_l"></div>
+                </div>
+                <div class="feed_c_btm"> <span class="right"> <a onclick="transpond(332)" href="javascript:void(0)">转发(0)</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a onclick="stowMini(332,this)" href="javascript:void(0)">收藏</a>&nbsp;&nbsp;|&nbsp;&nbsp; <a minid="332" rel="comment" href="javascript:void(0)">评论(0)</a> </span> <cite> <a href="http://develop.thinksns.com/sociax_2_0/index.php?app=home&amp;mod=space&amp;act=detail&amp;id=332">2小时前</a></cite> 来自 <cite><a href="#">网站</a></cite> </div>
+                <div style="" id="comment_list_332"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+         -->
+         <div class="c"></div>
+		 		<div class="page">{$list.html}</div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,44 @@
+<div class="pop_form alL" style="width:400px;">
+<div class="c"></div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">发私信给：</div>
+        <div class="pop_form_r">
+            <div style="width:222px;">{:W('SelectFriends',array('uid'=>$touid))}</div>
+        	 <!--<php>if($touid){</php>
+				<input type="hidden" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_to" value="{$touid}"/>
+				<input type="text" readonly disabled=true style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" value="{$touid|getUserName}"/>
+			<php>}else{</php>
+				<input type="text" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_to"/>
+			<php>}</php>-->
+		</div>
+    </div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">标题：</div>
+        <div class="pop_form_r"><input type="text" style="width:220px;" onblur="this.className='text'" onfocus="this.className='text2'" class="text" id="message_title"/></div>
+    </div>
+    <div class="pop_form_li">
+        <div class="pop_form_l alR lh20">私信内容：</div>
+        <div class="pop_form_r"><textarea style="width:280px; height:60px;" id="message_content" onblur="this.className='text'" onfocus="this.className='text2'" class="text"></textarea></div>
+    </div>
+    <div class="c"></div>
+    <div class="answers"><input type="button" value="提交" class="btn_b" onclick="doPostMessage();" /></div>
+</div>
+
+<script type="text/javascript">
+    function doPostMessage() {
+        var message_to      = $('#ui_fri_ids').val();
+        var message_title   = $('#message_title').val();
+        var message_content = $('#message_content').val();
+        $.post("{:U('home/Message/doPost')}", {to:message_to, title:message_title, content:message_content}, function(res){
+            if (res == '1') {
+                ui.success('发送成功');
+                //window.location.reload();
+                ui.box.close();
+            }else if(res == '-1') {
+            	ui.error('发信频率太快啦, 请10秒后重试');
+            }else {
+                ui.error('发送失败');
+            }
+        });
+    }
+</script>

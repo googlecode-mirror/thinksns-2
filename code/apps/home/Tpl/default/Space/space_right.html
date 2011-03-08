@@ -1,0 +1,28 @@
+        <div class="right_box" style="padding-bottom:0;">
+          <div class="user_follow_detail lineD_btm">
+  	<span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}"><strong>{$spaceCount.following}</strong><br>关注</a></span>
+    <span class="lineR"><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}"><strong>{$spaceCount.follower}</strong><br>粉丝</a></span>
+    <span><a href="{:U('home/space/index',array('uid'=>$uid))}"><strong>{$spaceCount.miniblog}</strong><br>微博</a></span>
+  </div>
+        </div>
+        <div style="padding:0 10px">{:W('Medal',array('uid'=>$uid, 'show_alert'=>'0'))}</div>
+        <div class="right_box" style="padding-top:0px;">
+          <h2>{$uid|getUserName}的标签</h2>
+           <p class="tags">
+           	<volist id="vo" name="usertags">
+           	<a tagid="{$vo.tag_id}" weight="423" href="{:U('home/user/searchtag',array('k'=>urlencode($vo['tag_name'])))}" class="fB">{$vo.tag_name}</a>&nbsp;
+           	</volist>
+           </p>
+        </div>
+  {:W('RelatedUser')}
+ 
+		
+        <div class="right_box">
+          <h2><a href="#">热门话题榜</a></h2>
+          <ul class="topic_list">
+          	<volist id="vo" name="hotTopic">
+            	<li><a href="{:U('home/user/search/',array('k'=>urlencode($vo['name'])))}" title="{$vo.name}">{$vo.name}({$vo.count})</a></li>
+			</volist>
+ 
+          </ul>
+        </div>

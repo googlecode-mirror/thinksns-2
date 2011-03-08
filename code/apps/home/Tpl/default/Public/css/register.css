@@ -1,0 +1,25 @@
+@charset "utf-8";
+/*
+注册样式
+*/
+.right { float:right }
+.RegBox { width: 740px; margin-right: auto; margin-left: auto; padding-top: 15px; padding-right: 20px; padding-bottom: 15px; padding-left: 20px; background-color: #FFF; border: 1px solid #D1D1D1; margin-top: 20px; margin-bottom: 20px; text-align: left; }
+.RegBox h1 { font-size: 14px; font-weight: bold; line-height: 35px; margin: 0px; padding: 0px; }
+.RegBox p { padding: 0px; margin: 0px; }
+.RegBox ul { width: 100%; border-top-width: 1px; border-top-style: solid; border-top-color: #CCCCCC; margin-top: 30px; padding-top: 30px; }
+.RegBox ul li { width: 100%; clear: both; float: none; overflow: visible; margin-top: 8px; }
+.RegBox ul li .cl { float: left; width: 15%; text-align: right; line-height: 20px; color: #666666; }
+.RegBox ul li .cl em { color: #FF0000; font-size: 12px; display: inline-block; width: 10px; text-align: center; }
+.RegBox ul li .cc { width: 37%; float: left; line-height: 20px; }
+.RegBox ul li .cc a { text-decoration: underline; }
+.RegBox ul li .cc .city { top: 23px; left: 0px; background-color: #FFFFFF; width: 400px; border: 1px solid #CCCCCC; }
+.RegBox ul li .cc .city a { }
+.RegBox ul li .cr { width: 48%; float: left; line-height: 20px; }
+.RegBox ul li .r2 { width: 50%; line-height: 20px; float: right; }
+.RegBox ul li .cr .img { }
+.RegBox ul li .cr .clue, .RegBox ul li .r2 .clue { background-image: url(images/clue.gif); background-repeat: no-repeat; background-position: 0px top; width: 300px; left: 20px; top: -8px; position: absolute; }
+.RegBox ul li .cr .clue p, .RegBox ul li .r2 .clue p { padding-left: 15px; padding-top: 10px; padding-right: 5px; padding-bottom: 5px; }
+.RegBox ul li .cr .clue .clue_btm, .RegBox ul li .r2 .clue .clue_btm { background-image: url(images/clue.gif); background-repeat: no-repeat; background-position: 0px bottom; height: 5px; display: block; }
+.btn_reg { line-height: 35px; background-image: url(images/btn_4.gif); height: 35px; width: 159px; background-repeat: no-repeat; background-position: 0px 0px; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; }
+.text_1 { border:1px solid #BDC7D8; font-size:14px; height:22px; line-height: 24px; font-family: Arial, Helvetica, sans-serif; margin: 0px; padding: 0px; font-weight: bold; }
+.text_2 { border:1px solid #005FAB; height:22px; font-size:14px; font-family: Arial, Helvetica, sans-serif; color: #000000; line-height: 24px; font-weight: bold; margin: 0px; padding: 0px; }

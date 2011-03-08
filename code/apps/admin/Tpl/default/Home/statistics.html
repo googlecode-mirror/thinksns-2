@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{$ts['site']['site_name']}后台管理</title>
+    <link href="__PUBLIC__/admin/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    <script>
+    function fold(index) {
+    	$('#app_'+index).slideToggle('fast');
+    }
+    </script>
+	</head>
+	<body>
+    <div id="container" class="so_main">
+        <div class="page_tit">欢迎使用{$ts['site']['site_name']}</div>
+        <div class="form2">
+        <h4>提示：点击标题可以折叠栏目</h4>
+            <php>$id = 0;</php>
+            <volist name="statistics" id="channel">
+	            <php>$index = $id++;</php>
+	            <h3 onclick="fold('{$index}');">{$key}</h3>
+	            <div id="app_{$index}">
+		            <volist name="channel" id="vo">
+		              <dl><dt><strong>{$key}：</strong></dt><dd>{$vo}</dd></dl>
+		            </volist>
+	            </div>
+            </volist>
+        </div>
+	</div>
+	</body>
+</html>

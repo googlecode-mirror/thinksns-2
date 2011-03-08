@@ -1,0 +1,1 @@
+<?php //require_once(SITE_PATH.'/apps/weibo/Lib/Model/WeiboModel.class.php');class PluginModel extends Model{    var $tableName = 'weibo_plugin';        }?>
